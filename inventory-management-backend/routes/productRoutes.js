@@ -14,10 +14,10 @@ router.get('/', async (req, res) => {
 
 // Add a new product
 router.post('/', async (req, res) => {
-  const { name, stock, whereToBuy } = req.body;  // Ensure the request body includes 'whereToBuy'
+  const { name, stock, whereToBuy, description } = req.body;  // Ensure the request body includes 'whereToBuy'
 
   try {
-    const newProduct = new Product({ name, stock, whereToBuy }); // Save 'whereToBuy' to the new product
+    const newProduct = new Product({ name, stock, whereToBuy, description }); // Save 'whereToBuy' to the new product
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (error) {
