@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json()); // For parsing application/json
 
 // MongoDB connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://admin:admin@inventorydev.fsfux.mongodb.net/?retryWrites=true&w=majority&appName=inventorydev';
+const mongoURI = process.env.MONGODB_URI;
 mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));

@@ -40,16 +40,27 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Update product stock
+// Update product details (Edit product)
 router.put('/:id', async (req, res) => {
-  const { stock } = req.body;
+  const { name, stock, whereToBuy } = req.body; // Include all fields to be updated
 
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, { stock }, { new: true });
-    res.json(updatedProduct);
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      { name, stock, whereToBuy }, // Update multiple fields
+      { new: true } // Return the updated product
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' }); // Return error if product not found
+    }
+
+    res.json(updatedProduct); // Respond with the updated product
   } catch (error) {
-    res.status(500).json({ message: 'Error updating product' });
+    console.error('Error updating product:', error); // Log the error for debugging
+    res.status(500).json({ message: 'Error updating product' }); // Return error message
   }
 });
+
 
 module.exports = router;
