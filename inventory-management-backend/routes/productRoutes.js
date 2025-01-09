@@ -42,12 +42,12 @@ router.delete('/:id', async (req, res) => {
 
 // Update product details (Edit product)
 router.put('/:id', async (req, res) => {
-  const { name, stock, whereToBuy } = req.body; // Include all fields to be updated
+  const { name, stock, whereToBuy, description } = req.body; // Include all fields to be updated
 
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, stock, whereToBuy }, // Update multiple fields
+      { name, stock, whereToBuy, description }, // Update multiple fields
       { new: true } // Return the updated product
     );
 
