@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const productRoutes = require('./routes/productRoutes');
 require('dotenv').config();
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,9 +28,19 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
+const startEC2Instance = async () => {
+  try {
+    const response = await axios.post(process.env.EC2_START_API_URL);
+    console.log('EC2 Instance started:', response.data);
+  } catch (error) {
+    console.error('Error starting EC2 Instance:', error);
+  }
+};
+
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
+  await startEC2Instance(); // Start EC2 instance when server starts
 });
 
 // Serve static assets if in production
